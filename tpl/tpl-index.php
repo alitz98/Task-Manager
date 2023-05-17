@@ -22,15 +22,27 @@
       </div>
       <div class="menu">
         <div class="title">Folders</div>
-        <ul>
+        <ul class="list">
           <li class="active"> <i class="fa fa-home"></i>All</li>
 
           <?php foreach($folders as $folder): ?>
          
-  <a href="?folder_id=<?=$folder->id ?>" > <li> <i class="fa fa-envelope"></i><?=$folder->name ?><a href="?delete_folder=<?=$folder->id ?>" style="float: right;font-size: 15px;">x</a></li> </a>  
+  <a href="?folder_id=<?=$folder->id ?>" >
+    <li class="<?= (isset($_GET['folder-id']) and $_GET['folder-id']== $folder->id) ? 'active':'' ?>"> <i class="fa fa-envelope"></i><?=$folder->name ?>
+        <a href="?delete_folder=<?=$folder->id ?>" style="float: right;font-size: 15px;">x</a>
+    </li>
+  </a>  
 
           <?php endforeach; ?>
         </ul>
+
+
+        <input id="inputvalue" type="text" name="add-folders">
+        <button id="button">+</button>
+
+
+
+
       </div>
     </div>
     <div class="view">
@@ -74,7 +86,64 @@
   </div>
 </div>
 <!-- partial -->
-  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+
+$(document).ready(function () {
+
+
+  
+  $('#button').click(function (e) { 
+    e.preventDefault();
+
+   var input= $('#inputvalue').val();
+
+    $.ajax({
+
+      method: "post",
+      url: "process/ajax.php",
+      data: {action:"addfolder",foldername:input},
+      
+      success: function (response) {
+
+        var id=response;
+
+        $('<a href="?folder_id='+id+'" > <li> <i class="fa fa-envelope"></i>' + input + '<a href="?delete_folder='+id+'" style="float: right;font-size: 15px;">x</a></li> </a>').appendTo("ul.list");      
+        
+      }
+    });
+    
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
