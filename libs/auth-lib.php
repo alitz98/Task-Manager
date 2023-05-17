@@ -12,6 +12,16 @@ function logedOut(){
 
 }
 
+function getUserid(){
+
+    return getUserById()->id ?? 0;
+}
+
+function getUserById(){
+
+    return $_SESSION['login'] ?? null;
+}
+
 function register($params){
 
     global $pdo;

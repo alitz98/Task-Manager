@@ -4,10 +4,7 @@
 defined('BASE_PATH') or die("permision denided.");
 
 
-function getUserid(){
 
-    return 1;
-}
 
 function getFolders(){
     global $pdo;

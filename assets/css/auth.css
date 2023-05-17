@@ -191,6 +191,7 @@ button:focus {
 .auth-form:nth-child(2) input:focus {
   border: solid #AE94DE;
 }
+
 .auth-form:nth-child(2) button {
   background-color: #AE94DE;
   color: white;
