@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include "config.php";
 
 try {
@@ -16,6 +18,5 @@ try {
 
 include "C:/laragon/www/Task-Manager/bootstrap/constant.php";
 include  BASE_PATH."/bootstrap/helper.php";
-
-include  BASE_PATH."/libs/task-lib.php";
 include  BASE_PATH."/libs/auth-lib.php";
+include  BASE_PATH."/libs/task-lib.php";
