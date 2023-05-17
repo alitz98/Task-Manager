@@ -24,4 +24,17 @@ switch ($action) {
         
         break;
 
+        case 'addtask':
+
+            addTask($_POST['folderid'],$_POST['title']);
+            
+            break;
+            
+            
+        case 'updatetask':
+
+            updateTask($_POST['taskid']);
+            
+            break;   
+
 }

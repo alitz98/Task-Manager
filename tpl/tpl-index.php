@@ -23,7 +23,7 @@
       <div class="menu">
         <div class="title">Folders</div>
         <ul class="list">
-          <li class="active"> <i class="fa fa-home"></i>All</li>
+        <a href="?all-folders"><li class="active"> <i class="fa fa-home"></i>All</li></a>
 
           <?php foreach($folders as $folder): ?>
          
@@ -47,38 +47,30 @@
     </div>
     <div class="view">
       <div class="viewHeader">
-        <div class="title">Manage Tasks</div>
-        <div class="functions">
-          <div class="button active">Add New Task</div>
-          <div class="button">Completed</div>
-          <div class="button inverz"><i class="fa fa-trash-o"></i></div>
-        </div>
+
+
+        <input id="add-task" type="text">
+       
       </div>
       <div class="content">
         <div class="list">
           <div class="title">Today</div>
           <ul>
-            <li class="checked"><i class="fa fa-check-square-o"></i><span>Update team page</span>
+
+          <?php foreach($tasks as $task): ?>
+
+
+            <li class="<?=$task->is_done ? "checked" : '' ?>">
+            <i id="doneswitch" data-taskid="<?=$task->id ?>"  class="fa <?=$task->is_done ? 'fa-check-square-o' : 'fa-square-o' ?> "></i><span><?=$task->title ?></span>
               <div class="info">
-                <div class="button green">In progress</div><span>Complete by 25/04/2014</span>
+                <span><?=$task->created_at ?></span>
+                <a href="?delete_task=<?=$task->id ?>" style="color: red;" onclick="confirm('are you sure?')">x</a>
               </div>
+             
             </li>
-            <li><i class="fa fa-square-o"></i><span>Design a new logo</span>
-              <div class="info">
-                <div class="button">Pending</div><span>Complete by 10/04/2014</span>
-              </div>
-            </li>
-            <li><i class="fa fa-square-o"></i><span>Find a front end developer</span>
-              <div class="info"></div>
-            </li>
-          </ul>
-        </div>
-        <div class="list">
-          <div class="title">Tomorrow</div>
-          <ul>
-            <li><i class="fa fa-square-o"></i><span>Find front end developer</span>
-              <div class="info"></div>
-            </li>
+
+            <?php endforeach; ?>
+            
           </ul>
         </div>
       </div>
@@ -92,6 +84,51 @@
 <script>
 
 $(document).ready(function () {
+
+  $('#doneswitch').click(function (e) { 
+    e.preventDefault();
+
+  var doneswitch=$('#doneswitch').attr('data-taskid');
+
+      $.ajax({
+        method:"post",
+        url: "process/ajax.php",
+        data: {action:"updatetask",taskid:doneswitch},
+        success: function (response) {
+          
+          location.reload();
+        }
+      });
+    
+  });
+
+
+
+
+
+
+
+  $('#add-task').on('keypress',function(e) {
+
+    var inputtask=$('#add-task').val();
+
+
+    if(e.which == 13) {
+
+      $.ajax({
+
+          method: "post",
+          url: "process/ajax.php",
+          data: {action:"addtask",folderid:<?=$_GET['folder_id'] ?>,title:inputtask},
+
+          success: function (response) {
+
+            location.reload();
+          }
+            });
+        
+    }
+});
 
 
   
@@ -120,30 +157,8 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
 });
-
-
-
-
 </script>
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>
