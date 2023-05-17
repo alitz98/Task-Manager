@@ -2,8 +2,8 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title><?=assets('style.css') ?></title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <title>task-manager</title>
+  <link rel="stylesheet" href="<?=assets('style.css') ?>">
 
 </head>
 <body>
@@ -25,7 +25,11 @@
         <ul>
           <li class="active"> <i class="fa fa-home"></i>All</li>
 
-          <li> <i class="fa fa-envelope"></i>Messages</li>
+          <?php foreach($folders as $folder): ?>
+         
+  <a href="?folder_id=<?=$folder->id ?>" > <li> <i class="fa fa-envelope"></i><?=$folder->name ?><a href="?delete_folder=<?=$folder->id ?>" style="float: right;font-size: 15px;">x</a></li> </a>  
+
+          <?php endforeach; ?>
         </ul>
       </div>
     </div>
